@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Registro de Usuário</title>
+	<link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+	<link th:href="@{/styles/estiloCadastroUsuario.css}" rel="stylesheet">
+</head>
+
+<body>
+<div id="form_container">
+	<div id="form_header">
+		<h1 id="form_title">Registro de Usuário</h1>
+	</div>
+
+	<div th:if="${success}" class="success-message">
+		<strong>Conta Criada com Sucesso!</strong>
+		<a class="ms-2" href="/index">Login</a>
+	</div>
+
+	<form method="post" th:object="${registerDto}" id="form">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+		<div id="input_container">
+			<div class="input-box">
+				<label class="form-label">Primeiro Nome</label>
+				<div class="input-field">
+					<i class="fas fa-user"></i>
+					<input class="form-control" th:field="${registerDto.firstName}">
+				</div>
+				<p th:if="${#fields.hasErrors('firstName')}" class="error-message"
+				   th:errors="${registerDto.firstName}">
+				</p>
+			</div>
+
+			<div class="input-box">
+				<label class="form-label">Último Nome</label>
+				<div class="input-field">
+					<i class="fas fa-user"></i>
+					<input class="form-control" th:field="${registerDto.lastName}">
+				</div>
+				<p th:if="${#fields.hasErrors('lastName')}" class="error-message"
+				   th:errors="${registerDto.lastName}">
+				</p>
+			</div>
+
+			<div class="input-box">
+				<label class="form-label">E-mail</label>
+				<div class="input-field">
+					<i class="fas fa-envelope"></i>
+					<input class="form-control" th:field="${registerDto.email}">
+				</div>
+				<p th:if="${#fields.hasErrors('email')}" class="error-message"
+				   th:errors="${registerDto.email}">
+				</p>
+			</div>
+
+			<div class="input-box">
+				<label class="form-label">Número de Telefone</label>
+				<div class="input-field">
+					<i class="fas fa-phone"></i>
+					<input class="form-control" th:field="${registerDto.phone}">
+				</div>
+				<p th:if="${#fields.hasErrors('phone')}" class="error-message"
+				   th:errors="${registerDto.phone}">
+				</p>
+			</div>
+
+			<div class="input-box">
+				<label class="form-label">Endereço</label>
+				<div class="input-field">
+					<i class="fas fa-map-marker-alt"></i>
+					<input class="form-control" th:field="${registerDto.address}">
+				</div>
+				<p th:if="${#fields.hasErrors('address')}" class="error-message"
+				   th:errors="${registerDto.address}">
+				</p>
+			</div>
+
+			<div class="input-box">
+				<label class="form-label">Senha</label>
+				<div class="input-field">
+					<i class="fas fa-lock"></i>
+					<input class="form-control" type="password" th:field="${registerDto.password}">
+					<i class="fas fa-eye password-icon"></i>
+				</div>
+				<p th:if="${#fields.hasErrors('password')}" class="error-message"
+				   th:errors="${registerDto.password}">
+				</p>
+			</div>
+
+			<div class="input-box">
+				<label class="form-label">Confirmar Senha</label>
+				<div class="input-field">
+					<i class="fas fa-lock"></i>
+					<input class="form-control" type="password" th:field="${registerDto.confirmPassword}">
+					<i class="fas fa-eye password-icon"></i>
+				</div>
+				<p th:if="${#fields.hasErrors('confirmPassword')}" class="error-message"
+				   th:errors="${registerDto.confirmPassword}">
+				</p>
+			</div>
+		</div>
+
+		<div class="buttons-container">
+			<button type="submit" class="btn-default">
+				<span>Enviar</span>
+				<i class="fas fa-arrow-right"></i>
+			</button>
+			<a href="/" class="btn-default cancel-btn">Cancelar</a>
+		</div>
+	</form>
+</div>
+	<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* Reset e Estilos Gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Amaranth', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #0078D4;
+    padding-top: 80px; /* Espaço para a navbar fixa */
+}
+
+/* Navbar Estilos */
+#navbar {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+#nav-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#nav-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0078D4;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link {
+    color: #212529;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #0078D4;
+}
+
+/* Botões */
+.btn-default {
+    background-color: #0078D4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    cursor: pointer;
+    gap: 8px;
+    text-decoration: none;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.btn-default:hover {
+    background-color: #3145ff;
+    transform: translateY(-2px);
+}
+
+.btn-default.outline {
+    background-color: transparent;
+    border: 2px solid #0078D4;
+    color: #0078D4;
+}
+
+.btn-default.outline:hover {
+    background-color: #0078D4;
+    color: white;
+}
+
+/* Container de Login */
+#login_container {
+    width: 100%;
+    max-width: 500px;
+    background-color: #f6f8ff;
+    padding: 60px;
+    border-radius: 8px;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}
+
+#form_header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#form_title {
+    font-weight: 500;
+    color: #272727;
+    position: relative;
+    display: inline-block;
+}
+
+#form_title::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 3px;
+    border-radius: 30px;
+    background-color: #6366f1;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+}
+
+/* Campos do Formulário */
+.input-box {
+    margin-bottom: 25px;
+}
+
+.form-label {
+    display: block;
+    font-size: 18px;
+    color: #404044;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.input-field {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 0 15px;
+}
+
+.input-field i {
+    color: #404044;
+    font-size: 18px;
+}
+
+.form-control {
+    padding: 12px 15px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.form-control:focus {
+    outline: none;
+}
+
+.input-field:focus-within {
+    outline: 2px solid #6366f1;
+}
+
+.password-icon {
+    cursor: pointer;
+    color: #676770;
+    transition: color 0.3s ease;
+}
+
+.password-icon:hover {
+    color: #3145ff;
+}
+.alert-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #c62828;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.alert-message.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border-left: 4px solid #2e7d32;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+    #login_container {
+        padding: 40px;
+        margin: 20px;
+    }
+
+    #nav-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    #login_container {
+        padding: 30px 20px;
+    }
+
+    body {
+        padding-top: 120px; /* Mais espaço para navbar em mobile */
+    }
+}

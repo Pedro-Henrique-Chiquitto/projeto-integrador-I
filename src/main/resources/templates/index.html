@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Login</title>
+	<link th:href="@{/styles/estiloLogin.css}" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+<div id="login_container">
+	<div id="form_header">
+		<h1 id="form_title">Login</h1>
+	</div>
+
+	<!-- Mensagens de feedback -->
+	<div th:if="${param.error}" class="alert-message">
+		Usuário ou senha inválidos
+	</div>
+
+	<div th:if="${param.logout}" class="alert-message success">
+		Logout realizado com sucesso
+	</div>
+
+	<form action="/login" method="post" id="form">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+		<div id="input_container">
+			<div class="input-box">
+				<label class="form-label">E-mail</label>
+				<div class="input-field">
+					<i class="fas fa-envelope"></i>
+					<input type="email" class="form-control" name="username" required>
+				</div>
+			</div>
+
+			<div class="input-box">
+				<label class="form-label">Senha</label>
+				<div class="input-field">
+					<i class="fas fa-lock"></i>
+					<input type="password" class="form-control" name="password" required>
+					<i class="fas fa-eye password-icon"></i>
+				</div>
+			</div>
+		</div>
+
+		<div class="buttons-container">
+			<button type="submit" class="btn-default">
+				<span>Entrar</span>
+				<i class="fas fa-sign-in-alt"></i>
+			</button>
+			<a href="/register" class="btn-default outline">Registrar</a>
+		</div>
+	</form>
+</div>
+
+<script>
+	// Mostrar/esconder senha
+    document.querySelectorAll('.password-icon').forEach(icon => {
+        icon.addEventListener('click', function() {
+            const input = this.previousElementSibling;
+            input.type = input.type === 'password' ? 'text' : 'password';
+            this.classList.toggle('fa-eye-slash');
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda</title>
+    <link rel="stylesheet" href="/frontEnd/src/styles/estiloLayoutAgenda.css">
+    <script defer src="/frontEnd/src/javascript/calendario.js"></script>
+    <link th:href="@{/styles/estiloLayoutAgenda.css}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header com nome da escola e dias da semana -->
+    <nav>
+        <div class="topo">
+            <div class="nome-escola amaranth-bold" >Nome da Escola</div>
+            <img class="logo" src="/frontEnd/src/assets/images/voltar.png" alt="Logo">
+        </div>
+    </nav>
+    <header>
+        <div class="calendario">
+            
+            <div class="week-days">
+                <p class="month"></p>
+                <p class="date"></p>
+                <p class="year"></p>
+                <p class="day"></p>
+            </div>
+            <div class="botoes-calendario">
+                <button id="prevDay" onclick="changeDate(-1)" disabled>Voltar</button>
+                <button id="nextDay" onclick="changeDate(1)">Avançar</button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Agendamentos -->
+    <section class="agendamentos-container">
+
+            <article class="agendamento">
+                <div class="agendamento-info">
+                    <div class="agendamento-local">Sala 15</div>
+                    <div class="agendamento-texto">Agendamento: Reunião de equipe
+                    </div>
+                    <div class="agendamento-pessoa">Agendado por: Fernando Almeida</div>
+                </div>
+                <div class="agendamento-tempo">
+                    <div class="hora-inicio">14:00</div>
+                    <div class="hora-fim">15:00</div>
+                </div>
+            </article>
+            
+            <article class="agendamento">
+                <div class="agendamento-info">
+                    <div class="agendamento-local">Sala 13</div>
+                    <div class="agendamento-texto">Agendamento: Treinamento de software</div>
+                    <div class="agendamento-pessoa">Agendado por: Fernanda Alves</div>
+                </div>
+                <div class="agendamento-tempo">
+                    <div class="hora-inicio">15:00</div>
+                    <div class="hora-fim">16:00</div>
+                </div>
+            </article>
+            <article class="agendamento">
+                <div class="agendamento-info">
+                    <div class="agendamento-local">Sala 13</div>
+                    <div class="agendamento-texto">Agendamento: Treinamento de software</div>
+                    <div class="agendamento-pessoa">Agendado por: Fernanda Alves</div>
+                </div>
+                <div class="agendamento-tempo">
+                    <div class="hora-inicio">15:00</div>
+                    <div class="hora-fim">16:00</div>
+                </div>
+            </article>
+            <article class="agendamento">
+                <div class="agendamento-info">
+                    <div class="agendamento-local">Sala 13</div>
+                    <div class="agendamento-texto">Agendamento: Treinamento de software</div>
+                    <div class="agendamento-pessoa">Agendado por: Fernanda Alves</div>
+                </div>
+                <div class="agendamento-tempo">
+                    <div class="hora-inicio">15:00</div>
+                    <div class="hora-fim">16:00</div>
+                </div>
+            </article>
+    </section>
+</body>
+
+</html>

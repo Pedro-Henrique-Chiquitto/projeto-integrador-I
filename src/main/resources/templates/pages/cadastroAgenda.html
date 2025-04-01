@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/frontEnd/src/styles/cadastroAgenda.css">
+    <title>Cadastro Agenda</title>
+</head>
+<body>
+    <main id="form_container">
+        <div id="form_header">
+            <h1 id="form_title">Criar evento</h1>
+            <button class="btn-default">
+                <i class="fa-solid fa-right-to-bracket"></i>
+            </button>
+        </div>
+    
+        <form action="" id="form">
+            <div id="input_container">
+                <div class="container">
+                    <div class="time-group">
+                        <div class="inicio-fim">
+                            <span class="label">Inicio:</span>
+                            </div>
+                        <div class="time-select">
+                            <label for="horasInicio"></label>
+                            <select id="horasInicio" onchange="atualizarHorario()"></select>
+    
+                            <label for="minutosInicio"></label>
+                            <select id="minutosInicio" onchange="atualizarHorario()"></select>
+                        </div>
+                    </div>
+    
+                    <div class="time-group">
+                        <div class="inicio-fim">
+                        <span class="label">Fim:</span>
+                        </div>
+                        <div class="time-select">
+                            <label for="horasFim"></label>
+                            <select id="horasFim" onchange="validarHorario()"></select>
+    
+                            <label for="minutosFim"></label>
+                            <select id="minutosFim" onchange="validarHorario()"></select>
+                        </div>
+                    </div>
+                    
+                    <div id="horarioSelecionado" class="horario-selecionado"></div>
+    
+                    <div class="input-box">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <div class="input-field">
+                            <textarea 
+                                id="descricao"
+                                name="descricao"
+                                class="form-control"
+                                rows="4"
+                            ></textarea>
+                            <i class="fa-regular fa-file-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <button type="submit" class="btn-default">
+                <i class="fa-solid fa-check"></i>
+                Criar evento
+            </button>
+        </form>
+    </main>
+    
+
+    <script src="/frontEnd/src/javascript/horas.js"></script>
+    <script src="/frontEnd/src/javascript/quebradelinha.js"></script>
+</body>
+</html>

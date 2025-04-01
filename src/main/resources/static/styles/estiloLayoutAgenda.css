@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+*{
+    margin: 0;
+    padding:0;
+    font-family: "Amaranth", sans-serif;
+}
+.agendamentos-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os elementos se movam para a próxima linha quando não houver espaço */
+    justify-content: center; /* Centraliza os itens horizontalmente */
+    align-items: center; /* Centraliza os itens verticalmente */
+    gap: 20px; /* Espaçamento entre os itens */
+    padding: 20px; /* Adiciona algum espaço dentro da container */
+}
+
+.agendamento {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 280px; /* Largura fixa, mas você pode ajustá-la conforme necessário */
+    max-width: 100%; /* Impede que o cartão ultrapasse o tamanho do contêiner */
+    box-sizing: border-box; /* Garante que o padding não ultrapasse a largura definida */
+}
+
+.agendamento-info {
+    margin-bottom: 10px;
+}
+
+.agendamento-local,
+.agendamento-texto,
+.agendamento-pessoa {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.agendamento-local {
+    font-weight: bold;
+}
+
+.agendamento-texto {
+    font-style: italic;
+}
+
+.agendamento-tempo {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.hora-inicio, .hora-fim {
+    font-size: 14px;
+    color: #666;
+}
+.botoes-calendario{
+    padding: 10px;
+}
+
+.botoes-calendario > button {
+    flex: 1; /* Cada botão ocupa 50% */
+    padding: 15px;
+    font-size: 18px;
+    background-color: #0078D4;
+    color: white;
+    border: none;
+    cursor: pointer;
+          
+
+}
+.topo { 
+    background-color: #0078D4; /* Cor de fundo */
+    display: flex; /* Flexbox para alinhas os itens */
+    justify-content: space-between; /* Coloca os itens nas extremidades */
+    align-items: center; /* Alinha verticalmente */
+    height: 80px; /* Altura da navbar */
+    width: 100%; /* Faz com que o fundo preencha toda a largura */
+    padding: 0 20px; /* Adiciona espaço nas laterais, se necessário */
+    box-sizing: border-box; /* Para que o padding não afete o tamanho total */
+}
+.nome-escola{
+    color: #fff;
+    font-weight: bold;
+    font-size: 33px;
+}
+.logo {
+    height: 40px; /* Ajusta o tamanho da imagem */
+    width: auto; /* Mantém a proporção da imagem */
+}
+.week-days{
+    width: 40vw;
+}
+.week-days > p{
+    padding: 20px 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.day{
+    background-color: lightgray;
+}
+.month{
+    background-color: crimson;
+    color: white;
+}
+.date{
+    background-color: white;
+    font-size: 70px;
+
+}
+.year{
+    background-color: white;
+}
+.calendario{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.amaranth-regular {
+    font-family: "Amaranth", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .amaranth-bold {
+    font-family: "Amaranth", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .amaranth-regular-italic {
+    font-family: "Amaranth", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  .amaranth-bold-italic {
+    font-family: "Amaranth", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+  }
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .agendamentos-container {
+        grid-template-columns: 1fr; /* Mudar para uma coluna */
+    }
+
+    .week-days {
+        flex-direction: column;
+    }
+
+    
+
+    .logo {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .agendamentos-container {
+        grid-template-columns: 1fr; /* Mudar para uma coluna */
+    }
+
+    .week-days .day {
+        font-size: 14px;
+    }
+
+    .logo {
+        width: 45px;
+        height: 45px;
+    }
+}
