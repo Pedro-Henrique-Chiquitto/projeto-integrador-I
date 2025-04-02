@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes da Tarefa</title>
+    <!-- Adicione seus estilos se necessário -->
+    <link th:href="@{/styles/css/main.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>Detalhes da Tarefa</h1>
+
+    <div class="task-details">
+        <p><strong>Título:</strong> <span th:text="${task.title}"></span></p>
+        <p><strong>Descrição:</strong> <span th:text="${task.description}"></span></p>
+        <p><strong>Início:</strong> <span th:text="${#temporals.format(task.beginLine, 'dd/MM/yyyy HH:mm')}"></span></p>
+        <p><strong>Fim:</strong> <span th:text="${#temporals.format(task.deadLine, 'dd/MM/yyyy HH:mm')}"></span></p>
+        <p><strong>Criado em:</strong> <span th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy HH:mm')}"></span></p>
+        <p><strong>Atualizado em:</strong> <span th:text="${#temporals.format(task.updatedAt, 'dd/MM/yyyy HH:mm')}"></span></p>
+    </div>
+
+    <div class="actions">
+        <!-- Link para edição -->
+        <a th:href="@{/agenda/tasks/{id}/edit(id=${task.id})}" class="btn btn-edit">Editar</a>
+
+        <!-- Formulário para exclusão -->
+        <form th:action="@{/agenda/tasks/{id}/delete(id=${task.id})}" method="get" style="display: inline;">
+            <button type="submit" class="btn btn-delete">Excluir</button>
+        </form>
+
+        <!-- Link para voltar (usando sintaxe Thymeleaf) -->
+        <a th:href="@{/agenda/tasks}" class="btn btn-back">Voltar à lista</a>
+    </div>
+</div>
+
+<!-- Adicione seus scripts se necessário -->
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

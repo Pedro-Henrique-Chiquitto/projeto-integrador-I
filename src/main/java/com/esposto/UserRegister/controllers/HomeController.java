@@ -13,12 +13,13 @@ public class HomeController {
 
 	@GetMapping({"/agenda"})
 	public String agenda() {
-		return "pages/agenda";
+		return "pages/taskList";
 	}
 	
 	@GetMapping("/contact")
 	public String contact() {
 		return "contact";
 	}
+
 
 }

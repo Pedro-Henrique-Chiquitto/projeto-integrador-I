@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${task.id == null} ? 'Criar Evento' : 'Editar Evento'">Cadastro Agenda</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link th:href="@{/styles/cadastroAgenda.css}" rel="stylesheet">
+    <link th:href="@{/styles/taskForm.css}" rel="stylesheet">
+</head>
+<body>
+
+
+<div class="form-container">
+    <div class="form-header">
+        <h1 class="form-title amaranth-bold" th:text="${task.id == null} ? 'Criar Evento' : 'Editar Evento'"></h1>
+    </div>
+
+    <form th:action="${task.id == null} ? @{/agenda/tasks} : @{/agenda/tasks/{id}(id=${task.id})}"
+          th:object="${task}"
+          method="post">
+
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group">
+            <label for="title" class="form-label">Título</label>
+            <input
+                    type="text"
+                    id="title"
+                    th:field="*{title}"
+                    class="form-control"
+                    required
+            />
+            <span class="error" th:if="${#fields.hasErrors('title')}"
+                  th:errors="*{title}"></span>
+        </div>
+
+        <div class="datetime-group">
+            <div class="datetime-field">
+                <label for="beginLine" class="form-label">Início</label>
+                <input
+                        type="datetime-local"
+                        id="beginLine"
+                        th:field="*{beginLine}"
+                        th:value="${task.beginLine != null} ? ${#temporals.format(task.beginLine, 'yyyy-MM-dd''T''HH:mm')} : ''"
+                        class="form-control"
+                        required
+                        onchange="validarHorario()"
+                />
+                <span class="error" th:if="${#fields.hasErrors('beginLine')}"
+                      th:errors="*{beginLine}"></span>
+            </div>
+
+            <div class="datetime-field">
+                <label for="deadLine" class="form-label">Fim</label>
+                <input
+                        type="datetime-local"
+                        id="deadLine"
+                        th:field="*{deadLine}"
+                        th:value="${task.deadLine != null} ? ${#temporals.format(task.deadLine, 'yyyy-MM-dd''T''HH:mm')} : ''"
+                        class="form-control"
+                        required
+                        onchange="validarHorario()"
+                />
+                <span class="error" th:if="${#fields.hasErrors('deadLine')}"
+                      th:errors="*{deadLine}"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description" class="form-label">Descrição</label>
+            <textarea
+                    id="description"
+                    th:field="*{description}"
+                    class="form-control"
+                    rows="5"
+                    required
+            ></textarea>
+            <span class="error" th:if="${#fields.hasErrors('description')}"
+                  th:errors="*{description}"></span>
+        </div>
+
+        <div class="form-actions">
+            <a th:href="@{/agenda/tasks}" class="btn btn-secondary">
+                <i class="fa-solid fa-xmark"></i>
+                Cancelar
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-check"></i>
+                <span th:text="${task.id == null} ? 'Criar Evento' : 'Salvar Alterações'"></span>
+            </button>
+        </div>
+    </form>
+</div>
+
+<script th:src="@{/js/validarHorario.js}"></script>
+</body>
+</html>

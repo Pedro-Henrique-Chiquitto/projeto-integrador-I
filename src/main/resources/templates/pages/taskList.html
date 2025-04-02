@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de Tarefas</title>
+    <link th:href="@{/styles/css/main.css}" rel="stylesheet">
+    <link th:href="@{/styles/estiloLayoutAgenda.css}" rel="stylesheet">
+    <script defer th:src="@{/js/calendario.js}"></script>
+</head>
+
+<body>
+<!-- Header com nome da escola e dias da semana -->
+<nav>
+    <div class="topo">
+        <div class="nome-escola amaranth-bold">Agenda Escolar</div>
+        <img class="logo" th:src="@{/images/voltar.png}" alt="Logo">
+    </div>
+</nav>
+
+<header>
+    <div class="calendario">
+        <div class="week-days">
+            <p class="month" th:text="${#temporals.format(currentDate, 'MMMM')}"></p>
+            <p class="date" th:text="${#temporals.format(currentDate, 'dd')}"></p>
+            <p class="year" th:text="${#temporals.format(currentDate, 'yyyy')}"></p>
+            <p class="day" th:text="${#temporals.format(currentDate, 'EEEE')}"></p>
+        </div>
+        <div class="botoes-calendario">
+            <button id="prevDay" onclick="changeDate(-1)">Voltar</button>
+            <button id="nextDay" onclick="changeDate(1)">Avançar</button>
+        </div>
+    </div>
+</header>
+
+<!-- Seção principal -->
+<div class="container">
+    <!-- Mensagens de feedback -->
+    <div th:if="${param.success}" class="alert alert-success">
+        Tarefa criada/atualizada com sucesso!
+    </div>
+    <div th:if="${param.deleted}" class="alert alert-info">
+        Tarefa removida com sucesso!
+    </div>
+
+    <div class="actions-header">
+        <a th:href="@{/agenda/tasks/new}" class="btn btn-primary">
+            Criar Nova Tarefa
+        </a>
+    </div>
+
+    <!-- Lista de Tarefas -->
+    <section class="agendamentos-container">
+        <article class="agendamento" th:each="task : ${tasks}"
+                 th:classappend="${task.deadLine.isBefore(currentDate)} ? 'atrasado' : ''">
+            <div class="agendamento-info">
+                <div class="agendamento-local" th:text="${task.title}">Título</div>
+                <div class="agendamento-texto" th:text="${task.description}">Descrição</div>
+                <div class="agendamento-pessoa">
+                    Criado em: <span th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy')}"></span>
+                </div>
+            </div>
+            <div class="agendamento-tempo">
+                <div class="hora-inicio" th:text="${#temporals.format(task.beginLine, 'HH:mm')}"></div>
+                <div class="hora-fim" th:text="${#temporals.format(task.deadLine, 'HH:mm')}"></div>
+                <div class="task-actions">
+                    <a th:href="@{/agenda/tasks/{id}(id=${task.id})}"
+                       class="btn btn-info btn-small">
+                        Detalhes
+                    </a>
+                    <a th:href="@{/agenda/tasks/{id}/edit(id=${task.id})}"
+                       class="btn btn-warning btn-small">
+                        Editar
+                    </a>
+                    <form th:action="@{/agenda/tasks/{id}/delete(id=${task.id})}"
+                          method="get"
+                          style="display: inline;">
+                        <button type="submit" class="btn btn-danger btn-small">
+                            Deletar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </article>
+
+        <article th:if="${#lists.isEmpty(tasks)}" class="agendamento vazio">
+            <div class="agendamento-info">
+                Nenhuma tarefa encontrada para esta data.
+            </div>
+        </article>
+    </section>
+</div>
+
+<script th:src="@{/js/main.js}"></script>
+
+<script>
+    function changeDate(days) {
+        const currentDate = new Date([[${#temporals.format(currentDate, 'yyyy-MM-dd')}]]);
+        currentDate.setDate(currentDate.getDate() + days);
+
+        const formattedDate = currentDate.toISOString().split('T')[0];
+        window.location.href = `/agenda/tasks?date=${formattedDate}`;
+    }
+</script>
+</body>
+</html>

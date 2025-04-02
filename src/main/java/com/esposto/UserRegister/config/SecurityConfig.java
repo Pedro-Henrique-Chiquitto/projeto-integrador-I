@@ -21,6 +21,10 @@ public class SecurityConfig {
 								"/index.html",
 								"/contact",
 								"/store/**",
+								"/agenda",
+								"/agenda/tasks/**",
+								"/eventos/**",  // Adicione esta linha para o controller de eventos
+								"/pages/**",  // Permite acesso aos templates
 								"/register",
 								"/login",
 								"/logout",
