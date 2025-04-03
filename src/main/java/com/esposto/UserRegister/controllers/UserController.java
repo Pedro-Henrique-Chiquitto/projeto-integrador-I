@@ -22,7 +22,7 @@ public class UserController {
 
 	@Autowired
 	private AppUserRepository repo;
-	
+
 	@GetMapping("/register")
 	public String register(Model model) {
 		RegisterDto registerDto = new RegisterDto();
@@ -30,35 +30,22 @@ public class UserController {
 		model.addAttribute("success", false);
 		return "register";
 	}
-	
+
 	@PostMapping("/register")
 	public String register(
 			Model model,
 			@Valid @ModelAttribute RegisterDto registerDto,
 			BindingResult result
-			) {
-		
-		if(!registerDto.getPassword().equals(registerDto.getConfirmPassword())) {
-			result.addError(
-					new FieldError("registerDto", "confirmPassword",
-							"Senha não confere"));
-			
-		}
-		
-		AppUser appUser = repo.findUserByEmail(registerDto.getEmail());
-		if (appUser != null) {
-			result.addError(new FieldError("registerDto", "email", "E-mail já utilizado!")
-					);
-		}
-		
-		if(result.hasErrors()) {
+	) {
+
+		if (result.hasErrors()) {
 			return "register";
 		}
-		
+
 		try {
 			//criar uma nova conta
 			var bCryptEncoder = new BCryptPasswordEncoder();
-			
+
 			AppUser newUser = new AppUser();
 			newUser.setFirstName(registerDto.getFirstName());
 			newUser.setLastName(registerDto.getLastName());
@@ -66,23 +53,20 @@ public class UserController {
 			newUser.setPhone(registerDto.getPhone());
 			newUser.setAddress(registerDto.getAddress());
 			newUser.setRole("client");
-			newUser.setCreatedAt(new Date());
+			// Remova a linha newUser.setCreatedAt(new Date()); - não é necessária com @CreationTimestamp
 			newUser.setPassword(bCryptEncoder.encode(registerDto.getPassword()));
-			
+
 			repo.save(newUser);
-			
-			
+
 			model.addAttribute("registerDto", new RegisterDto());
 			model.addAttribute("success", true);
-			
-			
+			return "redirect:/login?registered=true";
+
 		} catch (Exception ex) {
 			result.addError(new FieldError("registerDto", "firstName", ex.getMessage()));
+			return "register";
 		}
-		
-		return "register";
+
+
 	}
-	
-	
-	
 }

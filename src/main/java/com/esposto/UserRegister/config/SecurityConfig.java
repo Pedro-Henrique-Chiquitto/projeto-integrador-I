@@ -39,7 +39,7 @@ public class SecurityConfig {
 				.formLogin(form -> form
 						.loginPage("/")  // Página de login é a raiz (index.html)
 						.loginProcessingUrl("/login")  // URL para processar o login
-						.defaultSuccessUrl("/agenda", true)  // Redireciona para /home após login
+						.defaultSuccessUrl("/agenda/tasks", true)  // Redireciona para /home após login
 						.failureUrl("/?error=true")  // Redireciona para index com erro
 						.permitAll()
 				)

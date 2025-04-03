@@ -17,18 +17,23 @@
         <p><strong>Fim:</strong> <span th:text="${#temporals.format(task.deadLine, 'dd/MM/yyyy HH:mm')}"></span></p>
         <p><strong>Criado em:</strong> <span th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy HH:mm')}"></span></p>
         <p><strong>Atualizado em:</strong> <span th:text="${#temporals.format(task.updatedAt, 'dd/MM/yyyy HH:mm')}"></span></p>
+        <!-- Adicionar informação sobre o criador -->
+        <p><strong>Criado por:</strong> <span th:text="${task.creatorName}"></span></p>
     </div>
 
     <div class="actions">
-        <!-- Link para edição -->
-        <a th:href="@{/agenda/tasks/{id}/edit(id=${task.id})}" class="btn btn-edit">Editar</a>
+        <!-- Mostrar botões de edição e exclusão apenas para o criador -->
+        <th:block th:if="${task.user.email == currentUserEmail}">
+            <!-- Link para edição -->
+            <a th:href="@{/agenda/tasks/{id}/edit(id=${task.id})}" class="btn btn-edit">Editar</a>
 
-        <!-- Formulário para exclusão -->
-        <form th:action="@{/agenda/tasks/{id}/delete(id=${task.id})}" method="get" style="display: inline;">
-            <button type="submit" class="btn btn-delete">Excluir</button>
-        </form>
+            <!-- Formulário para exclusão -->
+            <form th:action="@{/agenda/tasks/{id}/delete(id=${task.id})}" method="get" style="display: inline;">
+                <button type="submit" class="btn btn-delete">Excluir</button>
+            </form>
+        </th:block>
 
-        <!-- Link para voltar (usando sintaxe Thymeleaf) -->
+        <!-- Link para voltar (sempre visível) -->
         <a th:href="@{/agenda/tasks}" class="btn btn-back">Voltar à lista</a>
     </div>
 </div>

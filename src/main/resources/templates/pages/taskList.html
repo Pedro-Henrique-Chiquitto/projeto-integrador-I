@@ -29,6 +29,7 @@
         <div class="botoes-calendario">
             <button id="prevDay" onclick="changeDate(-1)">Voltar</button>
             <button id="nextDay" onclick="changeDate(1)">Avançar</button>
+            <a th:href="@{/agenda/tasks/new}" class="btn btn-primary">Criar Nova Tarefa</a>
         </div>
     </div>
 </header>
@@ -43,21 +44,23 @@
         Tarefa removida com sucesso!
     </div>
 
-    <div class="actions-header">
-        <a th:href="@{/agenda/tasks/new}" class="btn btn-primary">
-            Criar Nova Tarefa
-        </a>
-    </div>
+
 
     <!-- Lista de Tarefas -->
     <section class="agendamentos-container">
         <article class="agendamento" th:each="task : ${tasks}"
-                 th:classappend="${task.deadLine.isBefore(currentDate)} ? 'atrasado' : ''">
+                 th:classappend="${task.deadLine.toLocalDate().isBefore(currentDate)} ? 'atrasado' : ''"
+                 th:attrappend="data-owner=${task.user.email == currentUserEmail ? 'true' : 'false'}">
+            <!-- Indicador visual para tarefas do usuário atual -->
+            <div class="owner-indicator" th:if="${task.user.email == currentUserEmail}">
+                Minha Tarefa
+            </div>
             <div class="agendamento-info">
                 <div class="agendamento-local" th:text="${task.title}">Título</div>
                 <div class="agendamento-texto" th:text="${task.description}">Descrição</div>
                 <div class="agendamento-pessoa">
-                    Criado em: <span th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy')}"></span>
+                    Criado por: <span th:text="${task.creatorName}">Nome do Criador</span> em
+                    <span th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy')}"></span>
                 </div>
             </div>
             <div class="agendamento-tempo">
@@ -68,17 +71,21 @@
                        class="btn btn-info btn-small">
                         Detalhes
                     </a>
-                    <a th:href="@{/agenda/tasks/{id}/edit(id=${task.id})}"
-                       class="btn btn-warning btn-small">
-                        Editar
-                    </a>
-                    <form th:action="@{/agenda/tasks/{id}/delete(id=${task.id})}"
-                          method="get"
-                          style="display: inline;">
-                        <button type="submit" class="btn btn-danger btn-small">
-                            Deletar
-                        </button>
-                    </form>
+
+                    <!-- Mostrar botões de edição e exclusão apenas para o criador -->
+                    <th:block th:if="${task.user.email == currentUserEmail}">
+                        <a th:href="@{/agenda/tasks/{id}/edit(id=${task.id})}"
+                           class="btn btn-warning btn-small">
+                            Editar
+                        </a>
+                        <form th:action="@{/agenda/tasks/{id}/delete(id=${task.id})}"
+                              method="get"
+                              style="display: inline;">
+                            <button type="submit" class="btn btn-danger btn-small">
+                                Deletar
+                            </button>
+                        </form>
+                    </th:block>
                 </div>
             </div>
         </article>
@@ -95,7 +102,7 @@
 
 <script>
     function changeDate(days) {
-        const currentDate = new Date([[${#temporals.format(currentDate, 'yyyy-MM-dd')}]]);
+        const currentDate = new Date([[${#temporals.format(currentDate, 'yyyy-MM-dd')}]] + 'T00:00:00');
         currentDate.setDate(currentDate.getDate() + days);
 
         const formattedDate = currentDate.toISOString().split('T')[0];

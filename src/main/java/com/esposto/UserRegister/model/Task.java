@@ -6,12 +6,18 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Future;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+// Remova este import
+// import org.springframework.security.core.userdetails.User;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tasks")
 public class Task {
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private AppUser user; // Alterado de User para AppUser
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +47,9 @@ public class Task {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Column(name = "creator_name")
+    private String creatorName;
 
     // Validação customizada
     public boolean isValidDeadline() {
@@ -94,6 +103,22 @@ public class Task {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public AppUser getUser() { // Alterado o tipo de retorno para AppUser
+        return user;
+    }
+
+    public void setUser(AppUser user) { // Alterado o tipo do parâmetro para AppUser
+        this.user = user;
+    }
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
     }
 
     @Override

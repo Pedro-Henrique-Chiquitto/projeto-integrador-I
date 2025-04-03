@@ -1,34 +1,51 @@
 package com.esposto.UserRegister.model;
 
-import java.util.Date;
+import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class AppUser {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	
-	private String firstName, lastName, phone, address, password, role;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;  // Alterado para Long para consistência com outras entidades
+
+	@Column(nullable = false)
+	private String firstName;
+
+	@Column(nullable = false)
+	private String lastName;
+
 	@Column(unique = true, nullable = false)
 	private String email;
-	
-	private Date createdAt;
 
-	public int getId() {
+	@Column(nullable = false)
+	private String password;
+
+	private String phone;
+	private String address;
+
+	@Column(nullable = false)
+	private String role = "USER";  // Valor padrão
+
+	@CreationTimestamp
+	@Column(name = "created_at", updatable = false)
+	private LocalDateTime createdAt;  // Alterado para LocalDateTime
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Task> tasks = new ArrayList<>();
+
+	// Getters e Setters
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -48,6 +65,22 @@ public class AppUser {
 		this.lastName = lastName;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getPhone() {
 		return phone;
 	}
@@ -64,14 +97,6 @@ public class AppUser {
 		this.address = address;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public String getRole() {
 		return role;
 	}
@@ -80,21 +105,26 @@ public class AppUser {
 		this.role = role;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Date getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
+	public List<Task> getTasks() {
+		return tasks;
 	}
-	
-	
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	// Métodos utilitários
+	public void addTask(Task task) {
+		tasks.add(task);
+		task.setUser(this);
+	}
+
+	public void removeTask(Task task) {
+		tasks.remove(task);
+		task.setUser(null);
+	}
 }
